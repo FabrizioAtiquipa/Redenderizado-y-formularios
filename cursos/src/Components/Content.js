@@ -2,6 +2,8 @@ import React from 'react';
 import Part from "./Part";
 //Mapea los valores
 export default function Content(props){
+    const reducer =(accumulator,p) => accumulator + p.exercises
+    const total=props.parts.reduce(reducer,0)
     return (
         <div>
             {
@@ -12,9 +14,13 @@ export default function Content(props){
                     );
                 })
             }
+            <p>Suma Total: {total}</p>
 
         </div>
     )
 }
+
+
+
 
 
