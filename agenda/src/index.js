@@ -1,7 +1,15 @@
 import ReactDOM from "react-dom";
 import React, { useState } from "react";
+import Filtro from "./Components/Filtro";
+import Formulario from "./Components/Formulario";
+import Persona from "./Components/Persona";
+import MenuTop from './Components/MenuTop/MenuTop';
+import { Layout } from "antd";
+import "./index.scss";
+
 
 const App = () => {
+  const { Header } = Layout;
   const [nuevonom, setNuevoNombre] = useState("");
   const [nuevonum, setNuevoNumero] = useState("");
   const [filtro, setFiltro] = useState("");
@@ -24,7 +32,7 @@ const App = () => {
     console.log(respetidos);
 
     if (respetidos.length > 0) {
-      alert(`${nuevaPersona.nombre} ya existe `);
+      alert(`${nuevaPersona.nombre} is already added to phonebook`);
       return;
     }
 
@@ -54,39 +62,24 @@ const App = () => {
   };
 
   return (
-    <div>
+    <Layout>
+      <Header>
+        <MenuTop />
+      </Header>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with:{" "}
-          <input type="text" onChange={Buscar} value={filtro} />
-        </div>
-        <hr />
-        <h2>add a new</h2>
-
-        <div>
-          name: <input type="text" onChange={Agregar} value={nuevonom} />
-        </div>
-
-        <div>
-          number:
-          <input type="text" onChange={Agregarnum} value={nuevonum} />
-        </div>
-
-        <div>
-          <button onClick={Guardar}>add</button>
-        </div>
-      </form>
+      <Filtro filtro={filtro} Buscar={Buscar} />
       <h2>Numbers</h2>
-      <ul>
-        {filtroPersona.map((person, index) => {
-          const {nombre, numero} = person
-          return (
-            <li key={nombre}> {nombre} {numero}</li>
-          );
-        })}
-      </ul>
-    </div>
+      <h2>add a new</h2>
+      <Formulario
+        nombre={nuevonom}
+        numero={nuevonum}
+        Agregar={Agregar}
+        Agregarnum={Agregarnum}
+        Guardar={Guardar}
+      />
+      <h2>Numbers</h2>
+      <Persona data={filtroPersona} />
+    </Layout>
   );
 };
 
