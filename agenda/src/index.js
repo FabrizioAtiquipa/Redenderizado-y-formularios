@@ -2,18 +2,19 @@ import ReactDOM from "react-dom";
 import React, { useState } from "react";
 
 const App = () => {
-  const [persona, setPersona] = useState([{ nombre: "Arto Hellas" }]);
   const [nuevonom, setNuevoNombre] = useState("");
+  const [nuevonum, setNuevoNumero] = useState("");
+  const [persona, setPersona] = useState([
+    { nombre: "Arto Hellas", numero: "040-1234567" },
+  ]);
 
   const Guardar = (event) => {
     event.preventDefault();
 
     const nuevaPersona = {
       nombre: nuevonom,
+      numero: nuevonum,
     };
-
-
-
 
     let respetidos = persona.filter((person) => {
       return person.nombre === nuevonom;
@@ -35,6 +36,10 @@ const App = () => {
     setNuevoNombre(event.target.value);
   };
 
+  const Agregarnum = (event) => {
+    setNuevoNumero(event.target.value);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -42,6 +47,11 @@ const App = () => {
         <div>
           name: <input type="text" onChange={Agregar} value={nuevonom} />
         </div>
+
+        <div>
+          number:<input type="text" onChange={Agregarnum} value={nuevonum} />
+        </div>
+
         <div>
           <button onClick={Guardar}>add</button>
         </div>
@@ -49,8 +59,8 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persona.map((person, index) => {
-          const { nombre } = person;
-          return <li key={nombre}>{nombre}</li>;
+          const { nombre, numero } = person;
+          return <li key={nombre}>{nombre} {numero}</li>;
         })}
       </ul>
     </div>
